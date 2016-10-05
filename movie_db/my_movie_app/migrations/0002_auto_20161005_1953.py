@@ -28,11 +28,13 @@ def add_item_rater_data_info(apps, schema_editor):
         for row in rater_info:
             Rater.objects.create(id=row[0],age=row[1],gender=row[2],occupation=row[3],zip_code=row[4])
 
-    # with open("data.csv") as open_file:
-    #     data_info = csv.reader(open_file, delimiter=" ")
-    #     for row in data_info:
-    #
-    raise Exception("oogly boogly")
+    with open("data.csv") as open_file:
+        data_info = csv.reader(open_file, delimiter="\t")
+        for row in data_info:
+            rater_id = Rater.objects.get(id=row[0])
+            item_id = Item.objects.get(id=row[0])
+            Data.objects.create(rater_id=rater_id,item_id=item_id,rating=row[2],time_stamp=row[3])
+
 
 class Migration(migrations.Migration):
 
